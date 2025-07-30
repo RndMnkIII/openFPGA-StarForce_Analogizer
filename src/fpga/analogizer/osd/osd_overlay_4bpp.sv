@@ -14,6 +14,7 @@ module osd_overlay_4bpp #(
     parameter int SCREEN_COLS = 32,
     parameter int SCREEN_ROWS = 32
 )(
+    input  logic        rot90,
     input  logic        clk,           // Reloj maestro 32 MHz
     input  logic        reset,
     input  logic        hblank,        // HBlank activo durante el blanking
@@ -59,11 +60,23 @@ module osd_overlay_4bpp #(
     //se añaden etapas de pipeline para evitar retrasos entre señales
     logic [2:0] y20_r, y20_r2;
     logic [2:0] X20_r, x20_r2;
+
     always_ff @(posedge clk) begin
         y20_r <= y[2:0]; // Guardamos el valor de y[2:0] para usarlo en la rom
         y20_r2 <= y20_r;
         X20_r <= x[2:0]; // Guardamos el valor de x[2:0] para usarlo en la rom
     end
+    // always_ff @(posedge clk) begin
+    //     if (rot90) begin
+    //         y20_r <= x[2:0]; // Guardamos el valor de x[2:0] para usarlo en la rom
+    //         y20_r2 <= y20_r;
+    //         X20_r <= y[2:0]; // Guardamos el valor de y[2:0] para usarlo en la rom
+    //     end else begin
+    //         y20_r <= y[2:0]; // Guardamos el valor de y[2:0] para usarlo en la rom
+    //         y20_r2 <= y20_r;
+    //         X20_r <= x[2:0]; // Guardamos el valor de x[2:0] para usarlo en la rom
+    //     end
+    // end
 
     //obtener direccion de la rom
     //caracter + posicion y

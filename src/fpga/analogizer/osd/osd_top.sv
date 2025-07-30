@@ -8,7 +8,6 @@
 // License: MIT
 //
 `default_nettype none
-import xain_pkg::*;
 
 module osd_top #(
     parameter int CLK_HZ = 32_000_000,
@@ -17,6 +16,7 @@ module osd_top #(
     parameter int ROWS = 32,
     parameter int CHAR_RAM_SIZE = COLS * ROWS
 )(
+    input  logic        rot90,
     input  logic         clk,
     input  logic         reset,
     input  logic         pixel_ce,
@@ -388,6 +388,7 @@ module osd_top #(
         .CHAR_WIDTH(8), .CHAR_HEIGHT(8),
         .SCREEN_COLS(COLS), .SCREEN_ROWS(ROWS)
     ) osd_inst (
+        .rot90(rot90),
         .clk(clk),
         .reset(reset),
         .hblank(hblank),
